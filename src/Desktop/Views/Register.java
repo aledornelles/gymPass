@@ -1,8 +1,16 @@
 package Desktop.Views;
 
+import DTO.RegistrarUsuarioDTO;
+import Desktop.Controllers.UsuarioController;
+import Enums.Funcao;
+import javax.swing.JOptionPane;
+
 public class Register extends javax.swing.JFrame {
 
+    private final UsuarioController usuarioController;
+    
     public Register() {
+        usuarioController = new UsuarioController();
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -14,13 +22,13 @@ public class Register extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        tfEmail2 = new javax.swing.JTextField();
+        tfNome = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        tfEmail3 = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbxTipo = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         password = new javax.swing.JPasswordField();
@@ -41,9 +49,9 @@ public class Register extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("JetBrainsMono NF", 1, 14)); // NOI18N
         jLabel4.setText("Nome Completo");
 
-        tfEmail2.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
+        tfNome.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
 
-        tfEmail3.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
+        email.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("JetBrainsMono NF", 1, 14)); // NOI18N
         jLabel5.setText("Email");
@@ -54,8 +62,8 @@ public class Register extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("JetBrainsMono NF", 1, 14)); // NOI18N
         jLabel7.setText("Senha");
 
-        jComboBox1.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "USUÁRIO", "ADMINISTRADOR" }));
+        cbxTipo.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
+        cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "USUÁRIO", "ADMINISTRADOR" }));
 
         jLabel8.setFont(new java.awt.Font("JetBrainsMono NF", 1, 14)); // NOI18N
         jLabel8.setText("Tipo de Usuário");
@@ -69,6 +77,11 @@ public class Register extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("JetBrainsMono NF", 1, 14)); // NOI18N
         jButton2.setText("Criar Conta");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,11 +110,11 @@ public class Register extends javax.swing.JFrame {
                                         .addGap(335, 335, 335)
                                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(tfEmail2, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(tfNome, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(tfEmail3, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(34, 34, 34)
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -128,15 +141,15 @@ public class Register extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfEmail2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tfEmail3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(email)
+                    .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
@@ -154,10 +167,40 @@ public class Register extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //PEGA INFORMAÇOES
+        String nome = this.tfNome.getText();
+        String email = this.email.getText();
+        String funcao = this.cbxTipo.getSelectedItem().toString();
+        String senha = new String(this.password.getPassword());
+        String senhaC = new String(this.passwordConfirmation.getPassword());
+        
+        //VERIFICA SE SENHAS CONFEREM
+        if (!senha.equals("") && email.equals("")) {
+            JOptionPane.showMessageDialog(null, "campos nao ");
+            return;
+        }
+        
+        if (!senha.equals(senhaC)) {
+            JOptionPane.showMessageDialog(null, "Senhas nao conférem");
+            return;
+        }
+        
+        //CONVERTE STRING PARA ENUM
+        Funcao f = funcao.equals("USUÁRIO") ? Funcao.USUARIO : Funcao.ADMINISTRADOR;
+        
+        //CRIA DTO QUE VAI PARA USE CASE
+        RegistrarUsuarioDTO dto = new RegistrarUsuarioDTO(nome, email, senha, f);
+        
+        this.usuarioController.CriarUsuario(dto);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbxTipo;
+    private javax.swing.JTextField email;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -168,7 +211,6 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPasswordField password;
     private javax.swing.JPasswordField passwordConfirmation;
-    private javax.swing.JTextField tfEmail2;
-    private javax.swing.JTextField tfEmail3;
+    private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables
 }

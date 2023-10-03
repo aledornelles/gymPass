@@ -21,8 +21,8 @@ public class HibernateUsuarioRepository implements UsuarioRepository {
             this.entityManager.getTransaction().begin();
             this.entityManager.persist(usuario);
             this.entityManager.getTransaction().commit();
-        } finally {
-            this.entityManager.close();
+        } catch (Exception e){
+            return null;
         }
         return null;
     }
@@ -34,9 +34,8 @@ public class HibernateUsuarioRepository implements UsuarioRepository {
             query.setParameter("email", email);
             return query.getSingleResult();
         } catch (NoResultException e) {
-            return null;
-        } finally {
-            this.entityManager.close();
-        }
+            System.out.println(e);
+        }  
+        return null;
     }
 }
